@@ -1,0 +1,38 @@
+name: CI-CD Pull Request & variables workflow Practice
+
+# this is triggered when a pull request is opened
+on:
+  
+  push:
+    branches: [ "main","dev","release/**" ]  # this means branches starting with release will also trigger the workflow
+  pull_request: # trigger workflow when pull request is made on main
+    branches:
+      - "main"
+
+# sequential workflow
+jobs:
+  build:
+    runs-on: ubuntu-slim
+
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      # - uses: actions/checkout@v4
+
+      - name: Hello world runner name
+        run: echo "Hello, world!"
+
+      - name: Run a multi-line script
+        run: echo "Hello, ${{ vars.MY_TEST_NAME }} "
+  test:
+    runs-on: ubuntu-slim
+    needs: build
+    steps:
+      - name: Test Phase job starts after build is complete
+        run: echo "testing started"
+
+  deploy:
+    runs-on: ubuntu-slim
+    needs: test
+    steps:
+      - name: Deploy job starts after the test is complete
+        run: echo "deploying now"
