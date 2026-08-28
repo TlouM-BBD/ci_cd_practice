@@ -35,3 +35,14 @@ jobs:
         run: |
           echo "this is line one",
           echo "this is line two"
+  test:
+    runs-on: ubuntu-slim
+    steps:
+      - name: Test Phase job starts
+        run: echo "testing started"
+
+  deploy:
+    runs-on: ubuntu-slim
+    steps:
+      - name: Deploy job starts
+        run: echo "deploying now"
